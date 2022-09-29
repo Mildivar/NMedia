@@ -1,3 +1,7 @@
+- name: Grant execute permission for gradlew
+  run: chmod +x gradlew
+- name: Build with Gradle
+  run: ./gradlew build --info
 @rem
 @rem Copyright 2015 the original author or authors.
 @rem
