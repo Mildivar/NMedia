@@ -135,9 +135,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/small_spacing"
         android:contentDescription="@string/description_views_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toBottomOf="@+id/view_counter"
+        app:layout_constraintEnd_toStartOf="@+id/view_counter"
+        app:layout_constraintTop_toTopOf="@+id/view_counter"
         app:srcCompat="@drawable/ic_looks_24" />
 
 
