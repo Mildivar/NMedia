@@ -13,6 +13,7 @@
         android:contentDescription="@string/description_post_author_avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/barrier_top"
         tools:srcCompat="@sample/posts_avatars" />
 
     <TextView
@@ -45,7 +46,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/description_post_menu"
         android:src="@drawable/ic_baseline_more_vert_24"
-        app:layout_constraintBottom_toBottomOf="@id/published"
+        app:layout_constraintBottom_toTopOf="@id/barrier_top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
