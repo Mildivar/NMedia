@@ -96,7 +96,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/like"
         app:layout_constraintStart_toEndOf="@id/like"
         app:layout_constraintTop_toTopOf="@+id/like"
-        tools:srcCompat="@sample/posts.json/data/likeCounter"
         tools:text="@sample/posts.json/data/likeCounter" />
 
     <ImageView
