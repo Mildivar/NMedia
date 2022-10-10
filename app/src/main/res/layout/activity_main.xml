@@ -11,9 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/description_post_author_avatar"
+        android:src="@mipmap/ic_netology_launcher"
+        app:layout_constraintBottom_toTopOf="@id/barrier_top"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/barrier_top"
         tools:srcCompat="@sample/posts_avatars" />
 
     <TextView
@@ -137,7 +138,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/view_counter"
         app:layout_constraintEnd_toStartOf="@+id/view_counter"
         app:layout_constraintTop_toTopOf="@+id/view_counter"
-        app:srcCompat="@drawable/ic_looks_24" />
+        app:srcCompat="@drawable/ic_views_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
