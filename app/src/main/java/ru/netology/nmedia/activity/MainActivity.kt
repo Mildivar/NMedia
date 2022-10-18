@@ -1,45 +1,59 @@
 package ru.netology.nmedia.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModel
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.ActivityMainBinding
-import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: PostViewModel by viewModels()
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater)}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        subscribe()
+        setupListeners()
+    }
 
-       val viewModel:PostViewModel by viewModels()
+private fun subscribe() {
+    viewModel.data.observe(this) { post ->
         binding.apply {
             author.text = post.author
             content.text = post.content
             published.text = post.published
+            like.setImageResource(if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24)
+
             likeCounter.text = countersCorrector(post.likesCounter)
             shareCounter.text = countersCorrector(post.sharesCounter)
-
-            like.setOnClickListener {
-                post.likedByMe = !post.likedByMe
-                like.setImageResource(
-                    if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24
-                )
-                if (post.likedByMe) post.likesCounter++ else post.likesCounter--
-                likeCounter.text = countersCorrector(post.likesCounter)
-            }
-
-            shares.setOnClickListener {
-                post.sharesCounter++
-                shareCounter.text = countersCorrector(post.sharesCounter)
-            }
         }
     }
 }
+    private fun setupListeners(){
+            binding.apply{
+                like.setOnClickListener {
+                    viewModel.like()
+//                post.likedByMe = !post.likedByMe
+//                like.setImageResource(
+//                    if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24
+//                )
+//                if (post.likedByMe) post.likesCounter++ else post.likesCounter--
+//                likeCounter.text = countersCorrector(post.likesCounter)
+                }
+
+                shares.setOnClickListener {
+                    viewModel.share()
+//                post.sharesCounter++
+//                shareCounter.text = countersCorrector(post.sharesCounter)
+                }
+            }
+        }
+        }
+
 
 private fun countersCorrector(item: Int): String {
     return when (item) {
@@ -55,3 +69,5 @@ private fun roundOffDecimal(number: Double): String {
     df.roundingMode = RoundingMode.FLOOR
     return df.format(number).toString()
 }
+
+
