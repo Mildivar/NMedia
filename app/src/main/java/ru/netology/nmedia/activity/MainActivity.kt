@@ -3,7 +3,6 @@ package ru.netology.nmedia.activity
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.WindowId.FocusObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -60,11 +59,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.postText.setOnClickListener{
-                binding.cancelButton.visibility = View.VISIBLE
-        }
-
-        binding.save.setOnClickListener {
+           binding.save.setOnClickListener {
             binding.postText.apply {
                 if (text.isNullOrBlank()) {
                     Toast.makeText(
@@ -84,20 +79,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-//        binding.editGroup.apply {
-//            if (binding.edited.text.isNotEmpty()) {
-//                visibility = View.VISIBLE
-//            } else {
-//                visibility = View.GONE
-//            }
-//        }
-
         binding.cancelButton.setOnClickListener {
             binding.postText.apply {
                 setText("")
                 clearFocus()
                 AndroidUtils.hideKeyBoard(this)
                 binding.cancelButton.visibility = View.GONE
+                viewModel.save()
             }
         }
     }
@@ -110,24 +98,7 @@ object AndroidUtils {
     }
 }
 
-//            binding.apply{
-//                like.setOnClickListener {
-//                    viewModel.like()
-//                post.likedByMe = !post.likedByMe
-//                like.setImageResource(
-//                    if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24
-//                )
-//                if (post.likedByMe) post.likesCounter++ else post.likesCounter--
-//                likeCounter.text = countersCorrector(post.likesCounter)
-//                }
-//
-//                shares.setOnClickListener {
-//                    viewModel.shareById()
-//                post.sharesCounter++
-//                shareCounter.text = countersCorrector(post.sharesCounter)
-//                }
-//            }
-//        }
+
 
 
 
