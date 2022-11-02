@@ -6,18 +6,20 @@ import androidx.recyclerview.widget.ListAdapter
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 
-typealias OnLikeListener = (Post) -> Unit
-typealias OnShareListener = (Post) -> Unit
+interface ActionListener{
+    fun onLikeClick(post:Post)
+    fun onShareClick(post:Post)
+    fun onRemoveClick(post:Post)
+    fun onEditClick(post:Post)
+}
 
 class PostAdapter(
-    private val likeListener: OnLikeListener,
-    private val shareListener: OnShareListener
+    private val actionListener: ActionListener
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallBack()) {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):PostViewHolder {
         val view = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(view,likeListener,shareListener)
+        return PostViewHolder(view,actionListener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {

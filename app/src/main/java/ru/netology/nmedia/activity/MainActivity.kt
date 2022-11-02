@@ -1,30 +1,114 @@
 package ru.netology.nmedia.activity
 
+import android.content.Context
 import android.os.Bundle
+import android.view.View
+import android.view.WindowId.FocusObserver
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import ru.netology.nmedia.adapter.ActionListener
 import ru.netology.nmedia.adapter.PostAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: PostViewModel by viewModels()
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater)}
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         val adapter = PostAdapter(
-            {viewModel.likeById(it.id)},
-            {viewModel.shareById(it.id)}
+            object : ActionListener {
+
+                override fun onLikeClick(post: Post) {
+                    viewModel.likeById(post.id)
+                }
+
+                override fun onShareClick(post: Post) {
+                    viewModel.shareById(post.id)
+                }
+
+                override fun onRemoveClick(post: Post) {
+                    viewModel.removeById(post.id)
+                }
+
+                override fun onEditClick(post: Post) {
+                    viewModel.edit(post)
+                }
+            }
         )
         binding.list.adapter = adapter
+
         viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
         }
-    }
 
+        viewModel.edited.observe(this) {
+            if (it.id == 0L) {
+                return@observe
+            } else {
+                binding.postText.apply {
+                    binding.cancelButton.visibility = View.VISIBLE
+                    requestFocus()
+                    setText(it.content)
+                }
+            }
+        }
+
+        binding.postText.setOnClickListener{
+                binding.cancelButton.visibility = View.VISIBLE
+        }
+
+        binding.save.setOnClickListener {
+            binding.postText.apply {
+                if (text.isNullOrBlank()) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Content is empty",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
+                viewModel.changeContent(text.toString())
+                viewModel.save()
+
+                setText("")
+                clearFocus()
+                AndroidUtils.hideKeyBoard(this)
+                binding.cancelButton.visibility = View.GONE
+            }
+        }
+
+//        binding.editGroup.apply {
+//            if (binding.edited.text.isNotEmpty()) {
+//                visibility = View.VISIBLE
+//            } else {
+//                visibility = View.GONE
+//            }
+//        }
+
+        binding.cancelButton.setOnClickListener {
+            binding.postText.apply {
+                setText("")
+                clearFocus()
+                AndroidUtils.hideKeyBoard(this)
+                binding.cancelButton.visibility = View.GONE
+            }
+        }
+    }
+}
+
+object AndroidUtils {
+    fun hideKeyBoard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+}
 
 //            binding.apply{
 //                like.setOnClickListener {
@@ -42,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 //                post.sharesCounter++
 //                shareCounter.text = countersCorrector(post.sharesCounter)
 //                }
-            }
+//            }
 //        }
 
 
