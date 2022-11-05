@@ -6,4 +6,8 @@
     <string name="description_like_icon" translatable="false">Likes</string>
     <string name="description_share_icon" translatable="false">Shares</string>
     <string name="description_views_icon" translatable="false">Views</string>
+    <string name="description_save_icon" translatable="false">Save</string>
+    <string name="edit">Edit</string>
+    <string name="remove">Remove</string>
+    <string name="post_text">Post text</string>
 </resources>
