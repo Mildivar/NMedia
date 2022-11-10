@@ -1,7 +1,5 @@
 package ru.netology.nmedia.viewmodel
 
-import android.view.View
-import androidx.constraintlayout.widget.Group
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.netology.nmedia.dto.Post
