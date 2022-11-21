@@ -9,5 +9,8 @@
     <string name="description_save_icon" translatable="false">Save</string>
     <string name="edit">Edit</string>
     <string name="remove">Remove</string>
+    <string name="enter_text">Type something!</string>
     <string name="post_text">Post text</string>
+    <string name="chooser_share_post">Share Post</string>
+    <string name="error_empty_content" translatable="false">No content!</string>
 </resources>
