@@ -2,6 +2,7 @@ package ru.netology.nmedia.activity
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
                         putExtra(Intent.EXTRA_TEXT, post.content)
                         type = "text/plain"
                     }
+                    viewModel.shareById(post.id)
 
                     val shareIntent =
                         Intent.createChooser(intent, getString(R.string.chooser_share_post))
@@ -57,6 +59,13 @@ class MainActivity : AppCompatActivity() {
                     viewModel.edit(post)
                     newPostLauncher.launch(post.content)
                 }
+
+                override fun onVideoClick(post: Post) {
+                    val webpage: Uri = Uri.parse(post.video)
+                    val intent = Intent(Intent.ACTION_VIEW, webpage)
+                    startActivity(intent)
+
+                }
             }
         )
         binding.list.adapter = adapter
@@ -65,12 +74,12 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(posts)
         }
 
-
         binding.fab.setOnClickListener {
             newPostLauncher.launch("")
         }
     }
 }
+
 //убрать клавиатуру
 object AndroidUtils {
     fun hideKeyBoard(view: View) {

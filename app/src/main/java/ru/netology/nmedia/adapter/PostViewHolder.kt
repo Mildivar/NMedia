@@ -1,5 +1,7 @@
 package ru.netology.nmedia.adapter
 
+import android.opengl.Visibility
+import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
@@ -23,6 +25,15 @@ class PostViewHolder(
             like.isChecked = post.likedByMe
             like.text = countersCorrector(post.likesCounter)
             shares.text = countersCorrector(post.sharesCounter)
+            video.visibility = if (post.video.isNotEmpty()) View.VISIBLE else View.GONE
+
+            playButton.setOnClickListener {
+                actionListener.onVideoClick(post)
+            }
+
+            picture.setOnClickListener {
+                actionListener.onVideoClick(post)
+            }
 
             like.setOnClickListener {
                 actionListener.onLikeClick(post)
@@ -32,11 +43,11 @@ class PostViewHolder(
                 actionListener.onShareClick(post)
             }
 
-            menu.setOnClickListener{
-                PopupMenu(it.context,it).apply{
+            menu.setOnClickListener {
+                PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)
                     setOnMenuItemClickListener { item ->
-                        when(item.itemId){
+                        when (item.itemId) {
                             R.id.remove -> {
                                 actionListener.onRemoveClick(post)
                                 true
