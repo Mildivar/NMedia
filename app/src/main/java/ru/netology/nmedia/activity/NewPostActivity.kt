@@ -16,7 +16,7 @@ class NewPostActivity : AppCompatActivity() {
         binding = ActivityNewPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        intent?.getStringExtra(Intent.EXTRA_TEXT).toString().apply {
+        intent?.getStringExtra(Intent.EXTRA_TEXT)?.apply {
             binding.edit.setText(this)  }
 
         binding.edit.requestFocus()

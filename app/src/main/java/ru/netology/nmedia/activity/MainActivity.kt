@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity() {
                     val webpage: Uri = Uri.parse(post.video)
                     val intent = Intent(Intent.ACTION_VIEW, webpage)
                     startActivity(intent)
-
                 }
             }
         )
