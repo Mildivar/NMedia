@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/common_spacing"
     tools:context=".activity.MainActivity">
 
     <ImageView
@@ -36,7 +35,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/small_spacing"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toBottomOf="@id/author"
@@ -104,6 +102,34 @@
     <!--        app:layout_constraintTop_toTopOf="@+id/like"-->
     <!--        tools:text="@sample/posts.json/data/likeCounter" />-->
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="picture,play_button"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/play_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/video"
+        app:layout_constraintBottom_toTopOf="@id/picture"
+        app:layout_constraintEnd_toEndOf="@id/picture"
+        app:layout_constraintStart_toStartOf="@id/picture"
+        app:layout_constraintTop_toBottomOf="@id/picture"
+        app:srcCompat="@drawable/ic_play_24" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/barrier_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/postText"
+        android:src="@drawable/picture_fsdf"
+        tools:srcCompat="@drawable/picture_fsdf" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/shares"
         style="@style/Widget.AppTheme.ShareTextButton"
@@ -129,11 +155,11 @@
 
     <TextView
         android:id="@+id/view_counter"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_spacing"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postText"
+        app:layout_constraintTop_toBottomOf="@+id/barrier_bottom"
         tools:text="@sample/posts.json/data/shareCounter" />
 
     <ImageView
@@ -147,6 +173,8 @@
         app:layout_constraintTop_toTopOf="@+id/view_counter"
         app:srcCompat="@drawable/ic_views_24"
         tools:ignore="ImageContrastCheck" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

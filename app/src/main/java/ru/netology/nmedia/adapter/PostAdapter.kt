@@ -11,6 +11,7 @@ interface ActionListener{
     fun onShareClick(post:Post)
     fun onRemoveClick(post:Post)
     fun onEditClick(post:Post)
+    fun onVideoClick(post: Post)
 }
 
 class PostAdapter(

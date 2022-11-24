@@ -11,6 +11,7 @@ val empty = Post(
     content = "",
     published = "",
     likedByMe = false,
+    video = "",
     likesCounter = 0,
     sharesCounter = 0
 )
