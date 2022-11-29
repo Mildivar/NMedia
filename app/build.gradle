@@ -37,6 +37,8 @@ android {
 dependencies {
     implementation 'androidx.wear.tiles:tiles-material:1.1.0'
     implementation 'com.google.firebase:firebase-inappmessaging:20.2.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     def core_ktx = "1.9.0"
     def appcompat = "1.5.1"
     def material = "1.7.0"
@@ -47,6 +49,7 @@ dependencies {
     def junit = "4.13.2"
     def recyclerview = "1.2.1"
     def gson_version = "2.9.0"
+    def nav_version = "2.5.0"
 
     implementation "androidx.core:core-ktx:$core_ktx"
     implementation "androidx.appcompat:appcompat:$appcompat"
@@ -58,5 +61,7 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview"
     implementation "com.google.code.gson:gson:$gson_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     testImplementation "junit:junit:$junit"
 }
