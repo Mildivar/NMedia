@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.ActionListener
 import ru.netology.nmedia.adapter.PostAdapter
@@ -20,6 +21,7 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 class FeedFragment : Fragment() {
 
     private val viewModel: PostViewModel by viewModels()
+//    private val binding by lazy { FragmentFeedBinding.inflate(layoutInflater) }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -81,16 +83,18 @@ class FeedFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener {
-            newPostLauncher.launch("")
+            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
         return binding.root
     }
+    //объект для передачи текста
+    companion object {
+        private const val TEXT_KEY = "TEXT_KEY"
+        var Bundle.textArg:String?
+            set(value) = putString(TEXT_KEY,value)
+            get() = getString(TEXT_KEY)
+    }
 }
-
-
-
-
-
 
 
 
