@@ -6,16 +6,18 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import ru.netology.nmedia.R
-import ru.netology.nmedia.activity.FeedFragment.Companion.textArg
+//import ru.netology.nmedia.activity.FeedFragment.Companion.textArg
+import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
+import ru.netology.nmedia.databinding.ActivityAppBinding
 
-class AppActivity : AppCompatActivity(R.layout.activity_app ) {
+class AppActivity : AppCompatActivity() {
 
 //    lateinit var binding: ActivityAppBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        binding = ActivityAppBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
+       val binding = ActivityAppBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         loadIntent()
     }
 
@@ -32,7 +34,7 @@ class AppActivity : AppCompatActivity(R.layout.activity_app ) {
                     return@let
                 } else {
                     intent.removeExtra(Intent.EXTRA_TEXT)
-                    findNavController(R.id.newPostFragment).navigate(
+                    findNavController(R.id.nav_host_fragment).navigate(
                         R.id.action_feedFragment_to_newPostFragment,
                         Bundle().apply{
                             textArg = text

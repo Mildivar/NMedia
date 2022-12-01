@@ -20,25 +20,29 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 
 class FeedFragment : Fragment() {
 
-    private val viewModel: PostViewModel by viewModels()
-//    private val binding by lazy { FragmentFeedBinding.inflate(layoutInflater) }
+    private val viewModel: PostViewModel by viewModels(
+        ownerProducer = ::requireParentFragment
+    )
+    private var _binding:FragmentFeedBinding? = null
+    val binding:FragmentFeedBinding
+    get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val binding = FragmentFeedBinding.inflate(
-            inflater,
+    ): View {
+        _binding = FragmentFeedBinding.inflate(
+            layoutInflater,
             container,
             false
         )
 
 //        setContentView(binding.root)
-        val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
-            result ?: return@registerForActivityResult
-            viewModel.changeContent(result)
-            viewModel.save()
-        }
+//        val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
+//            result ?: return@registerForActivityResult
+//            viewModel.changeContent(result)
+//            viewModel.save()
+//        }
 
         val adapter = PostAdapter(
             object : ActionListener {
@@ -66,8 +70,8 @@ class FeedFragment : Fragment() {
 
                 override fun onEditClick(post: Post) {
                     viewModel.edit(post)
-                    newPostLauncher.launch(post.content)
-                }
+                    findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+        }
 
                 override fun onVideoClick(post: Post) {
                     val webpage: Uri = Uri.parse(post.video)
@@ -87,13 +91,18 @@ class FeedFragment : Fragment() {
         }
         return binding.root
     }
-    //объект для передачи текста
-    companion object {
-        private const val TEXT_KEY = "TEXT_KEY"
-        var Bundle.textArg:String?
-            set(value) = putString(TEXT_KEY,value)
-            get() = getString(TEXT_KEY)
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
+    //объект для передачи текста
+//    companion object {
+//        private const val TEXT_KEY = "TEXT_KEY"
+//        var Bundle.textArg:String?
+//            set(value) = putString(TEXT_KEY,value)
+//            get() = getString(TEXT_KEY)
+//    }
 }
 
 
