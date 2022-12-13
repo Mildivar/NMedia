@@ -31,6 +31,10 @@ class PostViewHolder(
                 actionListener.onVideoClick(post)
             }
 
+            postText.setOnClickListener{
+                actionListener.onPostClick(post)
+            }
+
             picture.setOnClickListener {
                 actionListener.onVideoClick(post)
             }

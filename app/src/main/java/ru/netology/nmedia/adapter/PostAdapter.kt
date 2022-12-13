@@ -9,9 +9,10 @@ import ru.netology.nmedia.dto.Post
 interface ActionListener{
     fun onLikeClick(post:Post)
     fun onShareClick(post:Post)
-    fun onRemoveClick(post:Post)
+    fun onRemoveClick(post: Post)
     fun onEditClick(post:Post)
     fun onVideoClick(post: Post)
+    fun onPostClick(post: Post)
 }
 
 class PostAdapter(

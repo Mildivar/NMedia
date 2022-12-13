@@ -8,10 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
+import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
+import ru.netology.nmedia.activity.SinglePostFragment.Companion.idArg
 import ru.netology.nmedia.adapter.ActionListener
 import ru.netology.nmedia.adapter.PostAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
@@ -26,6 +29,7 @@ class FeedFragment : Fragment() {
     private var _binding:FragmentFeedBinding? = null
     val binding:FragmentFeedBinding
     get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,13 +74,23 @@ class FeedFragment : Fragment() {
 
                 override fun onEditClick(post: Post) {
                     viewModel.edit(post)
-                    findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+                    val text = post.content
+                    findNavController().navigate(R.id.action_feedFragment_to_newPostFragment,
+                    Bundle().apply {
+                       textArg = text
+                    })
         }
 
                 override fun onVideoClick(post: Post) {
                     val webpage: Uri = Uri.parse(post.video)
                     val intent = Intent(Intent.ACTION_VIEW, webpage)
                     startActivity(intent)
+                }
+
+                override fun onPostClick(post: Post) {
+                    findNavController().navigate(R.id.action_feedFragment_to_singlePostFragment,
+                    Bundle().apply
+                     { idArg = post.id })
                 }
             }
         )

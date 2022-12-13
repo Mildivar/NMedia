@@ -1,7 +1,6 @@
 package ru.netology.nmedia.repository
 
 import android.content.Context
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -82,6 +81,10 @@ class PostRepositoryFileImpl(val context: Context) : PostRepository {
             data.value = posts
             sync()
         }
+    }
+
+    override fun postById(id: Long) {
+        posts = posts.filter { it.id == id }
     }
 
     private fun sync() {
