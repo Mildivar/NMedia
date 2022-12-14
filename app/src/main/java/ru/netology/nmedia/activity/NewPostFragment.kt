@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentNewPostBinding
 import ru.netology.nmedia.util.StringArg
 import ru.netology.nmedia.viewmodel.PostViewModel
@@ -55,7 +56,7 @@ class NewPostFragment : Fragment() {
 //                intent.putExtra(Intent.EXTRA_TEXT, content)
 //                activity?.setResult(Activity.RESULT_OK, intent)
             }
-            findNavController().navigateUp()
+            findNavController().navigate(R.id.feedFragment)
         }
         return binding.root
     }
