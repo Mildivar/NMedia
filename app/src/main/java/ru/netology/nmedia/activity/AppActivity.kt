@@ -12,8 +12,6 @@ import ru.netology.nmedia.databinding.ActivityAppBinding
 
 class AppActivity : AppCompatActivity() {
 
-//    lateinit var binding: ActivityAppBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        val binding = ActivityAppBinding.inflate(layoutInflater)
@@ -26,11 +24,6 @@ class AppActivity : AppCompatActivity() {
             if (it.action == ACTION_SEND) {
                 val text = it.getStringExtra(Intent.EXTRA_TEXT)
                 if (text.isNullOrBlank()) {
-//                    Snackbar.make(binding.root, R.string.error_empty_content, LENGTH_INDEFINITE)
-//                        .setAction(android.R.string.ok) {
-//                        finish()
-//                    }
-//                        .show()
                     return@let
                 } else {
                     intent.removeExtra(Intent.EXTRA_TEXT)
@@ -40,7 +33,6 @@ class AppActivity : AppCompatActivity() {
                             textArg = text
                         }
                     )
-//                    binding.newText.text = text
                 }
             }
             }
