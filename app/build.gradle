@@ -45,7 +45,7 @@ dependencies {
     def constraintlayout = "2.1.4"
     def lifecycle_version = "2.5.1"
     def activity_version = "1.6.1"
-    def fragment_version = "1.5.4"
+    def fragment_version = "1.5.5"
     def junit = "4.13.2"
     def recyclerview = "1.2.1"
     def gson_version = "2.9.0"
