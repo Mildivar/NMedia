@@ -122,13 +122,3 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
         var Bundle.idArg: Long by LongArg
     }
 }
-
-
-//        @JvmStatic
-//        fun newInstance(param1: Long) =
-//            SinglePostFragment().apply {
-//                arguments = Bundle().apply {
-//                    putLong(ARG_PARAM1, param1)
-//                }
-//
-//            }

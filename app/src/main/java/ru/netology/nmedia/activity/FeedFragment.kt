@@ -40,13 +40,6 @@ class FeedFragment : Fragment() {
             false
         )
 
-//        setContentView(binding.root)
-//        val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
-//            result ?: return@registerForActivityResult
-//            viewModel.changeContent(result)
-//            viewModel.save()
-//        }
-
         val adapter = PostAdapter(
             object : ActionListener {
 
@@ -128,48 +121,6 @@ object AndroidUtils {
     }
 }
 
-
-//        viewModel.edited.observe(this) {
-//            if (it.id == 0L) {
-//                return@observe
-//            } else {
-//                binding.postText.apply {
-//                    binding.cancelButton.visibility = View.VISIBLE
-//                    requestFocus()
-//                    setText(it.content)
-//                }
-//            }
-//        }
-
-//        binding.save.setOnClickListener {
-//            binding.postText.apply {
-//                if (text.isNullOrBlank()) {
-//                    Toast.makeText(
-//                        this@MainActivity,
-//                        "Content is empty",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                    return@setOnClickListener
-//                }
-//                viewModel.changeContent(text.toString())
-//                viewModel.save()
-//
-//                setText("")
-//                clearFocus()
-//                AndroidUtils.hideKeyBoard(this)
-//                binding.cancelButton.visibility = View.GONE
-//            }
-//        }
-
-//        binding.cancelButton.setOnClickListener {
-//            binding.postText.apply {
-//                setText("")
-//                clearFocus()
-//                AndroidUtils.hideKeyBoard(this)
-//                binding.cancelButton.visibility = View.GONE
-//                viewModel.save()
-//            }
-//        }
 
 
 

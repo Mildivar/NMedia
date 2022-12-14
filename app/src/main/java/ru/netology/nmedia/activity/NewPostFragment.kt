@@ -31,11 +31,6 @@ class NewPostFragment : Fragment() {
             false
         )
 
-//
-//        intent?.getStringExtra(Intent.EXTRA_TEXT)?.apply {
-//            binding.edit.setText(this)
-//        }
-
         binding.edit.requestFocus()
 
         arguments?.textArg?.let {
@@ -48,13 +43,6 @@ class NewPostFragment : Fragment() {
                 viewModel.changeContent(content)
                 viewModel.save()
                 AndroidUtils.hideKeyBoard(requireView())
-//            val intent = Intent()
-//            if (binding.edit.text.isNullOrBlank()) {
-//                activity?.setResult(Activity.RESULT_CANCELED)
-//            } else {
-//                val content = binding.edit.text.toString()
-//                intent.putExtra(Intent.EXTRA_TEXT, content)
-//                activity?.setResult(Activity.RESULT_OK, intent)
             }
             findNavController().navigate(R.id.feedFragment)
         }
@@ -71,10 +59,5 @@ class NewPostFragment : Fragment() {
     }
 }
 
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        binding = ActivityNewPostBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
 
 
