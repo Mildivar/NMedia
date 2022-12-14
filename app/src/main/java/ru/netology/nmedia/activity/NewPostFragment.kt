@@ -17,7 +17,7 @@ class NewPostFragment : Fragment() {
         ownerProducer = ::requireParentFragment
     )
     private var _binding:FragmentNewPostBinding? = null
-    val binding: FragmentNewPostBinding
+    private val binding: FragmentNewPostBinding
     get()=_binding!!
 
     override fun onCreateView(

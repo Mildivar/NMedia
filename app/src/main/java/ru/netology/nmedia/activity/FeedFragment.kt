@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -27,7 +26,7 @@ class FeedFragment : Fragment() {
         ownerProducer = ::requireParentFragment
     )
     private var _binding:FragmentFeedBinding? = null
-    val binding:FragmentFeedBinding
+    private val binding:FragmentFeedBinding
     get() = _binding!!
 
     override fun onCreateView(

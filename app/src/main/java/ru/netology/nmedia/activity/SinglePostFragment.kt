@@ -10,12 +10,11 @@ import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.databinding.FragmentSinglePostBinding
+import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.repository.countersCorrector
 import ru.netology.nmedia.util.LongArg
 import ru.netology.nmedia.util.viewBinding
 import ru.netology.nmedia.viewmodel.PostViewModel
-
-//private const val ARG_PARAM1 = "param1"
 
 class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
 
@@ -23,13 +22,15 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
         ownerProducer = ::requireParentFragment
     )
 
+    lateinit var post: Post
+
 //    private var _binding: FragmentFeedBinding? = null
 //    val binding: FragmentFeedBinding
 //        get() = _binding!!
 
 //    private var param1: Long? = null
 
-    val binding by viewBinding(FragmentSinglePostBinding::bind)
+    private val binding by viewBinding(FragmentSinglePostBinding::bind)
 
     //    override fun onCreateView(
 //        inflater: LayoutInflater, container: ViewGroup?,
@@ -42,26 +43,36 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val post = viewModel.data.value?.find {
+        post = viewModel.data.value?.find {
             it.id == arguments?.idArg
-        }
+        }!!
 
+
+        viewModel.data.observe(viewLifecycleOwner) {
+            val singlePost = it.find { post ->
+                post.id == arguments?.idArg!!
+            }
+            if (singlePost != null) {
+                fillPost(singlePost)
+            }
+        }
+    }
+
+    private fun fillPost(post: Post) {
         post.apply {
             binding.postContent.let { cardPost ->
 
-                cardPost.author.text = this?.author
-                cardPost.postText.text = this?.content
-                cardPost.published.text = this?.published
-                cardPost.like.isChecked = this?.likedByMe == true
-                cardPost.like.text = this?.likesCounter?.let { countersCorrector(it) }
-                cardPost.shares.text = this?.sharesCounter?.let { countersCorrector(it) }
+                cardPost.author.text = this.author
+                cardPost.postText.text = this.content
+                cardPost.published.text = this.published
+                cardPost.like.isChecked = this.likedByMe == true
+                cardPost.like.text = countersCorrector(this.likesCounter)
+                cardPost.shares.text = countersCorrector(this.sharesCounter)
                 cardPost.video.visibility =
-                    if (this?.video?.isNotEmpty() == true) View.VISIBLE else View.GONE
+                    if (this.video.isNotEmpty()) View.VISIBLE else View.GONE
 
                 cardPost.like.setOnClickListener {
-                    if (post != null) {
-                        viewModel.likeById(post.id)
-                    }
+                    viewModel.likeById(post.id)
                 }
 
                 cardPost.menu.setOnClickListener {
@@ -70,21 +81,17 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
                         setOnMenuItemClickListener { item ->
                             when (item.itemId) {
                                 R.id.remove -> {
-                                    if (post != null) {
-                                        viewModel.removeById(post.id)
-                                    }
+                                    viewModel.removeById(post.id)
 
                                     findNavController().navigateUp()
                                 }
                                 R.id.edit -> {
-                                    if (post != null) {
-                                        viewModel.edit(post)
-                                        val text = post.content
-                                        findNavController().navigate(R.id.action_singlePostFragment_to_newPostFragment,
-                                            Bundle().apply {
-                                                textArg = text
-                                            })
-                                    }
+                                    viewModel.edit(post)
+                                    val text = post.content
+                                    findNavController().navigate(R.id.action_singlePostFragment_to_newPostFragment,
+                                        Bundle().apply {
+                                            textArg = text
+                                        })
 
                                     true
                                 }
@@ -97,12 +104,10 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
                 cardPost.shares.setOnClickListener {
                     val intent = Intent().apply {
                         action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_TEXT, post?.content)
+                        putExtra(Intent.EXTRA_TEXT, post.content)
                         type = "text/plain"
                     }
-                    if (post != null) {
-                        viewModel.shareById(post.id)
-                    }
+                    viewModel.shareById(post.id)
 
                     val shareIntent =
                         Intent.createChooser(intent, getString(R.string.chooser_share_post))
@@ -110,11 +115,6 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
 
                 }
             }
-
-        }
-
-        viewModel.data.observe(viewLifecycleOwner) {
-            viewModel.data.value?.filter{ post?.id == arguments?.idArg }
         }
     }
 
@@ -122,6 +122,8 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
         var Bundle.idArg: Long by LongArg
     }
 }
+
+
 //        @JvmStatic
 //        fun newInstance(param1: Long) =
 //            SinglePostFragment().apply {
