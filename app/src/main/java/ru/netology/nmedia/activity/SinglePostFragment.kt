@@ -22,7 +22,6 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
         ownerProducer = ::requireParentFragment
     )
 
-    lateinit var post: Post
 
 //    private var _binding: FragmentFeedBinding? = null
 //    val binding: FragmentFeedBinding
@@ -43,9 +42,9 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        post = viewModel.data.value?.find {
-            it.id == arguments?.idArg
-        }!!
+        viewModel.data.value?.find {
+             it.id == arguments?.idArg
+         }!!
 
 
         viewModel.data.observe(viewLifecycleOwner) {

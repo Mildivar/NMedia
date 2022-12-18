@@ -44,7 +44,7 @@ class NewPostFragment : Fragment() {
                 viewModel.save()
                 AndroidUtils.hideKeyBoard(requireView())
             }
-            findNavController().navigate(R.id.feedFragment)
+            findNavController().navigateUp()
         }
         return binding.root
     }
