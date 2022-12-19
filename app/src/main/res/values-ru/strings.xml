@@ -7,4 +7,5 @@
     <string name="post_text">Текст поста</string>
     <string name="chooser_share_post">Поделиться</string>
     <string name="enter_text">Пиши!</string>
+    <string name="add">Добавить</string>
 </resources>

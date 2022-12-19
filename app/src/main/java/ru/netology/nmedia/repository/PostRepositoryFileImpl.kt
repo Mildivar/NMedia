@@ -1,13 +1,14 @@
 package ru.netology.nmedia.repository
 
 import android.content.Context
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostRepository
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class PostRepositoryFileImpl(val context: Context) : PostRepository {
 
@@ -49,6 +50,7 @@ class PostRepositoryFileImpl(val context: Context) : PostRepository {
             if (it.id != id) it else it.copy(
                 likedByMe = !it.likedByMe,
                 likesCounter = if (it.likedByMe) it.likesCounter - 1 else it.likesCounter + 1
+
             )
         }
         data.value = posts
@@ -84,9 +86,27 @@ class PostRepositoryFileImpl(val context: Context) : PostRepository {
         }
     }
 
+    override fun postById(id: Long) {
+        posts = posts.filter { it.id == id }
+    }
+
     private fun sync() {
         context.openFileOutput(filename, Context.MODE_PRIVATE).bufferedWriter().use {
             it.write(gson.toJson(posts))
         }
     }
+}
+fun countersCorrector(item: Int): String {
+    return when (item) {
+        in 1000..9999 -> "${roundOffDecimal(item / 1000.0)}K"
+        in 10_000..999_999 -> "${(item / 1000)}K"
+        in 1_000_000..1_000_000_000 -> "${roundOffDecimal(item / 1_000_000.0)}M"
+        else -> "$item"
+    }
+}
+
+private fun roundOffDecimal(number: Double): String {
+    val df = DecimalFormat("#.#")
+    df.roundingMode = RoundingMode.FLOOR
+    return df.format(number).toString()
 }
