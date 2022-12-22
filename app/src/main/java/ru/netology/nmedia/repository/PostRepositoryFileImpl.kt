@@ -43,7 +43,7 @@ class PostRepositoryFileImpl(val context: Context) : PostRepository {
         }
     }
 
-    override fun get(): LiveData<List<Post>> = data
+    override fun getAll(): LiveData<List<Post>> = data
 
     override fun likeById(id: Long) {
         posts = posts.map {
