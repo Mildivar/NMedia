@@ -37,20 +37,24 @@ class FCMService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
 
         message.data[action]?.let {
-
-            when (Action.valueOf(it)) {
-                Action.LIKE -> handleLike(
-                    gson.fromJson(
-                        message.data[content],
-                        Like::class.java
+            try {
+                when (Action.valueOf(it)) {
+                    Action.LIKE -> handleLike(
+                        gson.fromJson(
+                            message.data[content],
+                            Like::class.java
+                        )
                     )
-                )
-                Action.POST -> handlePost(
-                    gson.fromJson(
-                        message.data[content],
-                        Post::class.java
+                    Action.POST -> handlePost(
+                        gson.fromJson(
+                            message.data[content],
+                            Post::class.java
+                        )
                     )
-                )
+                }
+            }
+            catch (e:Exception){
+                return@let
             }
         }
     }
@@ -108,17 +112,3 @@ data class Like(
     val postId: Long,
     val postAuthor: String,
 )
-//
-//{Snackbar.make(
-//    View(this),
-//    "sometext",
-//    1000
-//    )
-////                        .setAction(android.R.string.ok){
-////
-////                        }
-//    .show()
-//}
-
-//Toast.makeText(this, R.string.google_play_unavailable, Toast.LENGTH_LONG)
-//.show()
