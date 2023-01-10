@@ -10,14 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-20.04
 
-    steps:
+ steps:
       - name: Checkout Code
         uses: actions/checkout@v2
         
-        - name: Decode google-services.json
-          env:
+      - name: Decode google-services.json
+         env:
             FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
-          run: echo $FIREBASE_SECRET > ./app/google-services.json
+         run: echo $FIREBASE_SECRET > ./app/google-services.json
 
       - name: Build
         run: |
