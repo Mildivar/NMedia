@@ -1,8 +1,8 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.0'
 }
 
-group 'org.example'
+group 'ru.netology.pusher'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -10,5 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib'
+    implementation 'com.google.firebase:firebase-admin:9.1.1'
+    implementation 'org.slf4j:slf4j-simple:2.0.6'
 }
