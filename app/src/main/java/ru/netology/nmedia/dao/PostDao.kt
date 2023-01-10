@@ -33,7 +33,7 @@ interface PostDao {
     @Query(
         """
            UPDATE PostEntity SET
-           sharesCounter = sharesCounter + CASE WHEN sharesCounter THEN 1 END
+           sharesCounter = sharesCounter + 1
            WHERE id = :id
         """
     )
