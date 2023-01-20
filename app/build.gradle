@@ -24,8 +24,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlacehlders.usesCleartextTraffic = false
+        }
+        debug {
+            manifestPlaceholders.usesCleartextTraffic = true
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -38,11 +43,11 @@ android {
 
 dependencies {
     implementation 'androidx.wear.tiles:tiles-material:1.1.0'
-    implementation 'com.google.firebase:firebase-inappmessaging:20.2.0'
+    implementation 'com.google.firebase:firebase-inappmessaging:20.3.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     def core_ktx = "1.9.0"
-    def appcompat = "1.5.1"
+    def appcompat = "1.6.0"
     def material = "1.7.0"
     def constraintlayout = "2.1.4"
     def lifecycle_version = "2.5.1"
@@ -50,11 +55,12 @@ dependencies {
     def fragment_version = "1.5.5"
     def junit = "4.13.2"
     def recyclerview = "1.2.1"
-    def gson_version = "2.9.0"
+    def gson_version = "2.9.1"
     def nav_version = "2.5.0"
-    def room_version = "2.4.3"
+    def room_version = "2.5.0"
     def firebase_version = "31.1.0"
     def play_services_base_version = "18.1.0"
+    def okhtpp_version = "4.9.1"
 
     implementation "androidx.core:core-ktx:$core_ktx"
     implementation "androidx.appcompat:appcompat:$appcompat"
@@ -73,6 +79,7 @@ dependencies {
     implementation platform("com.google.firebase:firebase-bom:$firebase_version")
     implementation "com.google.firebase:firebase-messaging-ktx"
     implementation "com.google.android.gms:play-services-base:$play_services_base_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhtpp_version"
 
     testImplementation "junit:junit:$junit"
 }
