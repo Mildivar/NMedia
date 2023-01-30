@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -44,7 +45,9 @@ class FeedFragment : Fragment() {
             object : ActionListener {
 
                 override fun onLikeClick(post: Post) {
-                    viewModel.likeById(post.id)
+                    if (!post.likedByMe) {
+                        viewModel.likeById(post.id)
+                    } else viewModel.unlikeById(post.id)
                 }
 
                 override fun onShareClick(post: Post) {
@@ -88,8 +91,15 @@ class FeedFragment : Fragment() {
         )
         binding.list.adapter = adapter
 
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
-            adapter.submitList(posts)
+        viewModel.data.observe(viewLifecycleOwner) { state ->
+            adapter.submitList(state.posts)
+            binding.allStates.progress.isVisible = state.loading
+            binding.allStates.errorGroup.isVisible = state.error
+            binding.allStates.emptyText.isVisible = state.empty
+        }
+
+        binding.allStates.retryButton.setOnClickListener{
+            viewModel.loadPosts()
         }
 
         binding.fab.setOnClickListener {

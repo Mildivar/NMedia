@@ -1,20 +1,20 @@
 package ru.netology.nmedia.adapter
 
-import android.opengl.Visibility
 import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.repository.countersCorrector
-import java.math.RoundingMode
-import java.text.DecimalFormat
+import ru.netology.nmedia.util.CountersCorrector
 
 class PostViewHolder(
     private val binding: CardPostBinding,
-    private val actionListener: ActionListener
+    private val actionListener: ActionListener,
+
 ) : RecyclerView.ViewHolder(binding.root) {
+
+    private val countersCorrector = CountersCorrector
 
     fun bind(post: Post) {
         binding.apply {
@@ -24,9 +24,9 @@ class PostViewHolder(
 //            likeCounter.text = countersCorrector(post.likesCounter)
 //            shareCounter.text = countersCorrector(post.sharesCounter)
             like.isChecked = post.likedByMe
-            like.text = countersCorrector(post.likesCounter)
-            shares.text = countersCorrector(post.sharesCounter)
-            video.visibility = if (post.video.isNotEmpty()) View.VISIBLE else View.GONE
+            like.text = countersCorrector.count(post.likes)
+            shares.text = countersCorrector.count(post.sharesCounter)
+            video.visibility = if (post.video.isNullOrEmpty()) View.GONE else View.VISIBLE
 
             playButton.setOnClickListener {
                 actionListener.onVideoClick(post)

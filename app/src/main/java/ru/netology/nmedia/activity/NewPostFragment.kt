@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentNewPostBinding
 import ru.netology.nmedia.util.StringArg
 import ru.netology.nmedia.viewmodel.PostViewModel
@@ -44,6 +43,9 @@ class NewPostFragment : Fragment() {
                 viewModel.save()
                 AndroidUtils.hideKeyBoard(requireView())
             }
+        }
+        viewModel.postCreated.observe(viewLifecycleOwner){
+            viewModel.loadPosts()
             findNavController().navigateUp()
         }
         return binding.root

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.PopupMenu
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -11,7 +12,7 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.databinding.FragmentSinglePostBinding
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.repository.countersCorrector
+import ru.netology.nmedia.util.CountersCorrector
 import ru.netology.nmedia.util.LongArg
 import ru.netology.nmedia.util.viewBinding
 import ru.netology.nmedia.viewmodel.PostViewModel
@@ -23,6 +24,7 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
     )
 
 
+
 //    private var _binding: FragmentFeedBinding? = null
 //    val binding: FragmentFeedBinding
 //        get() = _binding!!
@@ -30,7 +32,7 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
 //    private var param1: Long? = null
 
     private val binding by viewBinding(FragmentSinglePostBinding::bind)
-
+    private val countersCorrector = CountersCorrector
     //    override fun onCreateView(
 //        inflater: LayoutInflater, container: ViewGroup?,
 //        savedInstanceState: Bundle?
@@ -42,17 +44,22 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.data.value?.find {
+        viewModel.data.value?.posts?.find {
              it.id == arguments?.idArg
          }!!
 
 
-        viewModel.data.observe(viewLifecycleOwner) {
-            val singlePost = it.find { post ->
+        viewModel.data.observe(viewLifecycleOwner) {state ->
+            val singlePost = state.posts.find { post ->
                 post.id == arguments?.idArg!!
             }
             if (singlePost != null) {
                 fillPost(singlePost)
+            }
+            state.let {
+                binding.allStates.progress.isVisible = state.loading
+                binding.allStates.errorGroup.isVisible = state.error
+                binding.allStates.emptyText.isVisible = state.empty
             }
         }
     }
@@ -65,8 +72,8 @@ class SinglePostFragment : Fragment(R.layout.fragment_single_post) {
                 cardPost.postText.text = this.content
                 cardPost.published.text = this.published
                 cardPost.like.isChecked = this.likedByMe == true
-                cardPost.like.text = countersCorrector(this.likesCounter)
-                cardPost.shares.text = countersCorrector(this.sharesCounter)
+                cardPost.like.text = countersCorrector.count(this.likes)
+                cardPost.shares.text = countersCorrector.count(this.sharesCounter)
                 cardPost.video.visibility =
                     if (this.video.isNotEmpty()) View.VISIBLE else View.GONE
 
